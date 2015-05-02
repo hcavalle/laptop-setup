@@ -1,0 +1,29 @@
+---
+# main.yml for deb base 
+  tasks:
+    - name: add VirtualBox repo signing key
+        apt_key: state=present
+                     url=http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc
+
+    - name: add virtualbox repo for precise
+      apt_repository: repo='deb http://download.virtualbox.org/virtualbox/debian precise contrib'
+          sudo: yes
+
+   - name: Update APT package cache
+      apt: update_cache=yes
+
+    - name: upgrade the distro
+      apt: upgrade=yes
+      sudo: yes
+
+    - name: Install base packages
+      - apt: name=$item state=latest
+        with_items:
+          - zsh
+          - screen
+          - vim
+          - ssh
+          - tree
+          - gnupg
+          - zip
+          - rsync

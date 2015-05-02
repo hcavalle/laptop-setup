@@ -1,0 +1,17 @@
+---
+- name: install
+  apt: pkg=
+  with_items:
+    - zsh
+    - screen
+    - vim-gtk
+    - ssh
+
+- name: zsh facts
+  register: default_shell
+  changed_when: False
+  sudo: no
+
+- name: make zsh default
+  shell:  chsh -s /bin/zsh 
+  when: default_shell.stdout.find('/bin/zsh') == -1

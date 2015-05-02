@@ -1,0 +1,11 @@
+---
+# main.yml for deb base 
+  - name: Install base packages
+    yum: name=$item state=latest
+    with_items:
+      - curl
+      - htop
+      - openssl
+      - pkg-config
+      - build-essential
+      - git

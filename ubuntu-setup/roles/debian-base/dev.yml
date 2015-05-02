@@ -1,0 +1,47 @@
+---
+# main.yml for deb base 
+ vars
+  - name: Install base packages
+    apt: name=$item state=latest
+    with_items:
+      - curl
+      - htop
+      - openssl
+      - pkg-config
+      - build-essential
+      - git
+
+  - name: add VirtualBox repo signing key
+      apt_key: state=present
+                  url=http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc
+
+  - name: add virtualbox repo for precise
+      apt_repository: repo='deb http://download.virtualbox.org/virtualbox/debian precise contrib'
+          sudo: yes
+        
+  - name: install vbox and vagrant
+    apt: name=$item state=present
+    with_items: 
+      virtualbox
+      vagrant
+      virtualbox-dkms
+
+  - name: download packer
+    get_url: https://dl.bintray.com/mitchellh/packer/packer_0.7.5_linux_amd64.zip 
+    dest: /home/hcavallero/tmp
+    
+    
+  - name: unzip packer
+    unarchive: src=https://dl.bintray.com/mitchellh/packer/packer_0.7.5_linux_amd64.zip copy=false dest=/usr/local/packer
+
+  - name: download terraform
+    get_url: https://dl.bintray.com/mitchellh/terraform/terraform_0.4.2_linux_amd64.zip
+    dest: /home/hcavallero/tmp
+    
+  - name: unzip terraform
+    unarchive: src=URL ABOVE
+    dest: 
+
+  - name: pull down repos
+      
+    

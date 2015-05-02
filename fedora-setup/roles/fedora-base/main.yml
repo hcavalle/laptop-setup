@@ -1,0 +1,21 @@
+---
+# main.yml for fedora base 
+  tasks:
+    - name: add VirtualBox repo signing key
+        yum_key: state=present
+                     url=http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc
+
+    - nae: add virtualbox repo for precise
+        yum_repository: repo='deb http://download.virtualbox.org/virtualbox/debian precise contrib'
+            sudo: yes
+
+    - name: Update yum package cache
+
+    - name: Install base packages
+      yum: update_cache=yes
+      - yum: name=$item state=latest
+        with_items:
+          - zsh
+          - screen
+          - vim-gtk
+          - ssh

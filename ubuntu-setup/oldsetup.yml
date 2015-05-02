@@ -1,0 +1,23 @@
+- hosts: local
+  connection: local
+
+  tasks:
+  - name: install
+    apt: name=zsh state=present
+    apt: name=screen state=present
+    apt: name=vim-gtk state=present
+    apt: name=ssh state=present
+
+  - name: zsh facts
+    shell: 'echo $SHELL'
+    register: default_shell
+    changed_when: False
+    sudo: no
+
+  - name: make zsh default
+    shell:  chsh -s /bin/zsh 
+    when: default_shell.stdout.find('/bin/zsh') == -1
+
+  handlers:
+    - name: start sshd
+      service: name=sshd state=restarted
