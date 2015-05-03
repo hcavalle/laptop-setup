@@ -1,33 +1,19 @@
-- hosts: local
+---
+- hosts: 127.0.0.1 
   connection: local
+  sudo: yes
 
   tasks:
-    - name: add VirtualBox repo signing key
-        apt_key: state=present
-                     url=http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc
-
-    - name: add virtualbox repo for precise
-        apt_repository: repo='deb http://download.virtualbox.org/virtualbox/debian precise contrib'
-            sudo: yes
-
-    - name: Update apt package cache
-      apt: update_cache=yes sudo=yes
 
     - name: Install base packages
-      apt: name=$item state=latest
+      action: apt pkg={{item}} state=installed
       with_items:
         - zsh
         - screen
         - vim-gtk
         - ssh
 
-  - name: zsh facts
-    shell: 'echo $SHELL'
-    register: default_shell
-    changed_when: False
-    sudo: no
-
-  - name: make zsh default
-    shell:  chsh -s /bin/zsh 
-    when: default_shell.stdout.find('/bin/zsh') == -1
-
+    - include: tasks/dev.yml 
+    - include: tasks/zsh.yml 
+    - include: tasks/dotfiles.yml 
+    - debug: msg='Done.'

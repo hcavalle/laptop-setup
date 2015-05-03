@@ -1,7 +1,7 @@
 ---
 # main.yml for deb base 
   - name: Install base packages
-    yum: name=$item state=latest
+    apt-get: name=$item state=latest
     with_items:
       - curl
       - htop
@@ -9,3 +9,22 @@
       - pkg-config
       - build-essential
       - git
+  - name: Install ruby language tools
+    apt-get: name=$item state=latest
+	with_items:
+	    - python-pip
+	    - curl
+	    - nodejs
+	    - nfs-kernel-server
+	    - nfs-common
+	    - rpcbind
+	    - tmux
+	    - npm
+	    - libjpeg-dev
+	    - libfreetype6-dev
+	    - zlib1g-dev
+	    - libpng12-dev
+	    - python-dev
+	    - libpq-dev
+	    - python-dev
+	  sudo: yes

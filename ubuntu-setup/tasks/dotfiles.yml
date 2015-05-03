@@ -1,0 +1,15 @@
+---
+- apt: name=rcm state=installed
+
+- name: Check rcm is installed
+  stat: path=/usr/local/bin/rcup
+  register: rcm_installed
+
+- name: add rcm repo
+  apt_repository: repo='ppa:martin-frost/thoughtbot-rcm'
+
+- name: Check out dotfiles repo
+  git: repo=git@github.com:hcavalle/.dotfiles.git dest=/home/hcavalle/.dotfiles/
+
+- name: Apply dotfiles
+  shell: rcup -f -d /home/hcavalle/.dotfiles/

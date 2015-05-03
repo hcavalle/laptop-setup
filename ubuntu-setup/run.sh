@@ -8,7 +8,7 @@ sudo pip install -r requirements.txt
 
 echo -e "please make sure to edit the config.json file followed by [ENTER]" && read USELESS_VAR
 
-ansible-playbook setup.yml -i HOSTS --ask-sudo-pass  --module-path ./ansible_modules --extra-vars "@config.json"
+ansible-playbook setup.yml -i hosts --ask-sudo-pass  --module-path ./ansible_modules 
 
 source ~/.zshrc
 exit 0

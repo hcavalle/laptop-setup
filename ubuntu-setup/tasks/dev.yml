@@ -1,0 +1,90 @@
+---
+  - name: add rcm repo
+    apt_repository: repo='ppa:martin-frost/thoughtbot-rcm' state=present
+    sudo: yes
+
+  - apt: upgrade=dist
+    sudo: yes
+
+  - name: Install base packages
+    action: apt pkg=$item state=installed
+    with_items:
+      - curl
+      - htop
+      - openssl
+      - pkg-config
+      - build-essential
+      - git
+      - tree
+      - gnupg
+      - zip
+      - rsync
+    sudo: yes
+
+  - name: Install language tools
+    action: apt pkg=$item state=installed
+    with_items:
+      - python-pip
+      - nodejs
+      - nfs-kernel-server
+      - nfs-common
+      - rpcbind
+      - tmux
+      - npm
+      - libjpeg-dev
+      - libfreetype6-dev
+      - zlib1g-dev
+      - libpng12-dev
+      - python-dev
+      - libpq-dev
+      - python-dev
+    sudo: yes
+
+  - name: Install java tools
+    action: apt pkg=$item state=installed
+    with_items:
+      - python-software-properties
+    sudo: yes
+
+  - name: add java oracle repo
+    apt_repository: repo='ppa:webupd8team/java' state=present
+    sudo: yes
+
+  - name: Install java tools
+    action: apt pkg=$item state=installed
+    with_items:
+      - default-jre
+      - default-jdk
+      - openjdk-7-jre
+      - openjdk-7-jdk
+      - python-software-properties
+      - eclipse
+    sudo: yes
+
+  - name: Pip install stuff
+    pip: name=virtualenv
+  - name: Pip install aws stuff
+    pip: name=awscli
+
+  - name: install vbox and vagrant
+    action: apt pkg=$item state=installed
+    with_items: 
+      - virtualbox
+      - vagrant
+      - virtualbox-dkms
+    sudo: yes
+
+  - name: download packer
+    get_url: url='https://dl.bintray.com/mitchellh/packer/packer_0.7.5_linux_amd64.zip' dest=/home/hcavallero/tmp
+    
+    
+  - name: unzip packer
+    unarchive: src='https://dl.bintray.com/mitchellh/packer/packer_0.7.5_linux_amd64.zip' copy=false dest=/usr/local/packer
+    sudo: yes
+
+  - name: download terraform
+    get_url: url='https://dl.bintray.com/mitchellh/terraform/terraform_0.4.2_linux_amd64.zip' dest=/home/hcavallero/tmp
+    
+  - name: unzip terraform
+    unarchive: src='https://dl.bintray.com/mitchellh/terraform/terraform_0.4.2_linux_amd64.zip' dest=/usr/local/terraform 
+    sudo: yes

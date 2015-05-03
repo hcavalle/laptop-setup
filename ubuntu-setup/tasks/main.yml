@@ -1,0 +1,20 @@
+---
+# main.yml for deb base 
+  tasks:
+   - name: Update APT package cache
+      apt: update_cache=yes
+
+    - name: upgrade the distro
+      apt: upgrade=yes
+
+    - name: Install base packages
+      - apt: name=$item state=latest
+        with_items:
+          - zsh
+          - screen
+          - vim
+          - ssh
+          - tree
+          - gnupg
+          - zip
+          - rsync
