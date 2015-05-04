@@ -8,13 +8,13 @@
       apt: upgrade=yes
 
     - name: Install base packages
-      - apt: name={{item}} state=latest
-        with_items:
-          - zsh
-          - screen
-          - vim
-          - ssh
-          - tree
-          - gnupg
-          - zip
-          - rsync
+    - apt: name={{item}} state=latest
+      with_items:
+        - zsh
+        - screen
+        - vim
+        - ssh
+        - tree
+        - gnupg
+        - zip
+        - rsync
