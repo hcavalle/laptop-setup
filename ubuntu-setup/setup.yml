@@ -17,6 +17,10 @@
         - screen
         - vim-gtk
         - ssh
+        - w3m
+        - surfraw
+        - openvpn
+
       sudo: yes
 
     - include: tasks/dev.yml 
