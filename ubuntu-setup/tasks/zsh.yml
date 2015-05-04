@@ -8,8 +8,8 @@
   when: current_shell.stdout != '/usr/local/bin/zsh'
 
 - name: Set zsh as default shell
-  shell: chsh -s {{ zsh_path }}
-  when: current_shell.stdout != '/usr/local/bin/zsh'
+  shell: chsh $USER -s $(which zsh)  
+  when: current_shell.stdout != '/usr/bin/zsh'
 
 - name: Check oh-my-zsh is installed
   stat: path={{ home_dir}}/.oh-my-zsh

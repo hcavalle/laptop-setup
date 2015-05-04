@@ -1,7 +1,12 @@
 ---
 - hosts: 127.0.0.1 
   connection: local
-  sudo: yes
+  vars:
+    zsh_path: /usr/bin/zsh
+    home_path: /home/hcavalle
+    home_dir: /home/hcavalle
+    tmp_dir: /home/hcavalle/Downloads
+    ds_repo_dir: /home/hcavalle/ds/repos
 
   tasks:
 
@@ -12,8 +17,9 @@
         - screen
         - vim-gtk
         - ssh
+      sudo: yes
 
     - include: tasks/dev.yml 
-    - include: tasks/zsh.yml 
     - include: tasks/dotfiles.yml 
+    - include: tasks/zsh.yml 
     - debug: msg='Done.'
