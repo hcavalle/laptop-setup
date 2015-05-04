@@ -11,20 +11,7 @@
 
   tasks:
 
-    - name: Install base packages
-      action: apt pkg={{item}} state=installed
-      with_items:
-        - zsh
-        - screen
-        - vim-gtk
-        - ssh
-        - w3m
-        - surfraw
-        - openvpn
-
-      sudo: yes
-
-    - include: tasks/dev.yml 
+    #- include: tasks/dev.yml 
     - include: tasks/dotfiles.yml 
-    - include: tasks/zsh.yml 
-    - debug: msg='Done.'
+    #- include: tasks/zsh.yml 
+    #- debug: msg='Done.'
