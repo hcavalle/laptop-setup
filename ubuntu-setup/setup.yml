@@ -11,6 +11,15 @@
 
   tasks:
 
+    - name: add rcm repo
+      apt_repository: repo='ppa:martin-frost/thoughtbot-rcm' state=present
+      sudo: yes
+
+    - apt: upgrade=dist force=yes
+      sudo: yes
+    #- apt: update_cache=yes 
+    #  sudo: yes
+    
     - name: Install base packages
       action: apt pkg={{item}} state=installed
       with_items:
@@ -21,7 +30,14 @@
         - w3m
         - surfraw
         - openvpn
-
+        - nfs-kernel-server
+        - nfs-common
+        - rpcbind
+        - tmux
+        - mysql-client
+          #for laptop lid problem...
+        - fglrx
+        - fglrx-pxpress
       sudo: yes
 
     - include: tasks/dev.yml 

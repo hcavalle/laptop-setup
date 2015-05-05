@@ -1,13 +1,4 @@
 ---
-  - name: add rcm repo
-    apt_repository: repo='ppa:martin-frost/thoughtbot-rcm' state=present
-    sudo: yes
-
-  - apt: upgrade=dist force=yes
-    sudo: yes
-  #- apt: update_cache=yes 
-  #  sudo: yes
-
   - name: Install base packages
     action: apt pkg={{item}} state=installed
     with_items:
@@ -23,16 +14,10 @@
       - rsync
     sudo: yes
 
-  - name: Install language tools
+  - name: Install python language tools
     action: apt pkg={{item}} state=installed
     with_items:
       - python-pip
-      - nodejs
-      - nfs-kernel-server
-      - nfs-common
-      - rpcbind
-      - tmux
-      - npm
       - libjpeg-dev
       - libssl-dev
       - libfreetype6-dev
@@ -41,11 +26,13 @@
       - python-dev
       - libpq-dev
       - python-dev
+    sudo: yes
+
+  - name: Install ruby language tools
+    action: apt pkg={{item}} state=installed
+    with_items:
       - ruby
       - ruby-dev
-    sudo: yes
-  - name: ln nodejs to node
-    shell: ln -s /usr/bin/nodejs /usr/bin/node
     sudo: yes
 
   - name: Install java tools
@@ -58,8 +45,6 @@
     apt_repository: repo='ppa:webupd8team/java' state=present
     sudo: yes
 
-  #- name: Clone all ds repos
-  #  shell: sudo /bin/sh -c 'curl -u <token>:x-oauth-basic -s https://api.github.com/orgs/datascienceinc/repos\?per_page\=200 | ruby -rubygems -e `require "json"; JSON.load(STDIN.read).each { |repo| %x[git clone #{repo["ssh_url"]} ]}`'
 
   - name: Install java tools
     action: apt pkg={{item}} state=installed
@@ -99,3 +84,6 @@
   - name: unzip terraform
     unarchive: src={{ tmp_dir }}/terraform_0.4.2_linux_amd64.zip dest=/usr/bin 
     sudo: yes
+
+  #- name: Clone all ds repos
+  #  shell: sudo /bin/sh -c 'curl -u <token>:x-oauth-basic -s https://api.github.com/orgs/datascienceinc/repos\?per_page\=200 | ruby -rubygems -e `require "json"; JSON.load(STDIN.read).each { |repo| %x[git clone #{repo["ssh_url"]} ]}`'
